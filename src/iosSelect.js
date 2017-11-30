@@ -964,7 +964,7 @@
 	            if ( now >= destTime ) {
 	                that.isAnimating = false;
 	                that._translate(destX, destY);
-	                
+
 	                if ( !that.resetPosition(that.options.bounceTime) ) {
 	                    that._execEvent('scrollEnd');
 	                }
@@ -1177,9 +1177,9 @@
 		this.fallback = options.fallback;
 		this.title = options.title || '';
 		this.options.itemHeight = options.itemHeight || 35;
-		this.options.itemShowCount = [3, 5, 7, 9].indexOf(options.itemShowCount) !== -1? options.itemShowCount: 7; 
+		this.options.itemShowCount = [3, 5, 7, 9].indexOf(options.itemShowCount) !== -1? options.itemShowCount: 7;
 		this.options.coverArea1Top = Math.floor(this.options.itemShowCount / 2);
-		this.options.coverArea2Top = Math.ceil(this.options.itemShowCount / 2); 
+		this.options.coverArea2Top = Math.ceil(this.options.itemShowCount / 2);
 		this.options.headerHeight = options.headerHeight || 44;
 		this.options.relation = iosSelectUtil.isArray(this.options.relation)? this.options.relation: [];
 		this.options.oneTwoRelation = this.options.relation[0];
@@ -1302,15 +1302,17 @@
 
 			this.scrollOne = new IScrollForIosSelect('#oneLevelContain', {
 				probeType: 3,
-				bounce: false
+				bounce: false,
+				click:true
 			});
 			this.setScorllEvent(this.scrollOne, 1);
-			
+
 			if (this.level >= 2) {
 				this.twoLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollTwo = new IScrollForIosSelect('#twoLevelContain', {
 					probeType: 3,
-					bounce: false
+					bounce: false,
+					click:true
 				});
 				this.setScorllEvent(this.scrollTwo, 2);
 			}
@@ -1318,7 +1320,8 @@
 				this.threeLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollThree = new IScrollForIosSelect('#threeLevelContain', {
 					probeType: 3,
-					bounce: false
+					bounce: false,
+					click:true
 				});
 				this.setScorllEvent(this.scrollThree, 3);
 			}
@@ -1326,7 +1329,8 @@
 				this.fourLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollFour = new IScrollForIosSelect('#fourLevelContain', {
 					probeType: 3,
-					bounce: false
+					bounce: false,
+					click:true
 				});
 				this.setScorllEvent(this.scrollFour, 4);
 			}
@@ -1334,7 +1338,8 @@
 				this.fiveLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollFive = new IScrollForIosSelect('#fiveLevelContain', {
 					probeType: 3,
-					bounce: false
+					bounce: false,
+					click:true
 				});
 				this.setScorllEvent(this.scrollFive, 5);
 			}
@@ -1342,7 +1347,8 @@
 				this.sixLevelContainDom.style.height = this.options.itemHeight * this.options.itemShowCount + this.options.cssUnit;
 				this.scrollSix = new IScrollForIosSelect('#sixLevelContain', {
 					probeType: 3,
-					bounce: false
+					bounce: false,
+					click:true
 				});
 				this.setScorllEvent(this.scrollSix, 6);
 			}
@@ -1420,6 +1426,10 @@
 			});
 			scrollInstance.on('scrollEnd', function () {
 				var pa = Math.abs(this.y / self.baseSize) / self.options.itemHeight;
+				console.log(this.y);
+				console.log(self.baseSize);
+				console.log(self.options.itemHeight);
+				console.log(pa);
 				var plast = 1;
 				var to = 0;
 				if (Math.ceil(pa) === Math.round(pa)) {
@@ -1429,6 +1439,7 @@
 					to = Math.floor(pa) * self.options.itemHeight * self.baseSize;
 					plast = Math.floor(pa) + 1;
 				}
+				console.log(to);
 				scrollInstance.scrollTo(0, -to, 0);
 
 				self.toggleClassList(mapKey.levelContain);
@@ -1464,9 +1475,9 @@
 
 				if (self.level > index) {
 					if ((mapKey.relation === 1 && iosSelectUtil.isArray(self.data[index])) || iosSelectUtil.isFunction(self.data[index])) {
-						self.setLevelData(index + 1, self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id, self.selectSixObj.id);
+						self.setLevelData(index + 1, self.selectOneObj.id, self.selectTwoObj.id, self.selectThreeObj.id, self.selectFourObj.id, self.selectFiveObj.id, self.selectSixObj.id,scrollInstance);
 					}
-					
+
 				}
 			});
 		},
@@ -1482,7 +1493,7 @@
 				index: 1,
 				relation: 0,
 				levelUlContainDom: self.oneLevelUlContainDom,
-				scrollInstance: self.scrollOne, 
+				scrollInstance: self.scrollOne,
 				levelContainDom: self.oneLevelContainDom
 			};
 			if (index === 2) {
@@ -1490,7 +1501,7 @@
 					index: 2,
 					relation: self.options.oneTwoRelation,
 					levelUlContainDom: self.twoLevelUlContainDom,
-					scrollInstance: self.scrollTwo, 
+					scrollInstance: self.scrollTwo,
 					levelContainDom: self.twoLevelContainDom
 				};
 			}
@@ -1499,7 +1510,7 @@
 					index: 3,
 					relation: self.options.twoThreeRelation,
 					levelUlContainDom: self.threeLevelUlContainDom,
-					scrollInstance: self.scrollThree, 
+					scrollInstance: self.scrollThree,
 					levelContainDom: self.threeLevelContainDom
 				};
 			}
@@ -1508,7 +1519,7 @@
 					index: 4,
 					relation: self.options.threeFourRelation,
 					levelUlContainDom: self.fourLevelUlContainDom,
-					scrollInstance: self.scrollFour, 
+					scrollInstance: self.scrollFour,
 					levelContainDom: self.fourLevelContainDom
 				};
 			}
@@ -1517,7 +1528,7 @@
 					index: 5,
 					relation: self.options.fourFiveRelation,
 					levelUlContainDom: self.fiveLevelUlContainDom,
-					scrollInstance: self.scrollFive, 
+					scrollInstance: self.scrollFive,
 					levelContainDom: self.fiveLevelContainDom
 				};
 			}
@@ -1526,7 +1537,7 @@
 					index: 6,
 					relation: self.options.fiveSixRelation,
 					levelUlContainDom: self.sixLevelUlContainDom,
-					scrollInstance: self.scrollSix, 
+					scrollInstance: self.scrollSix,
 					levelContainDom: self.sixLevelContainDom
 				};
 			}
@@ -1551,7 +1562,7 @@
 			}
 			return levelData;
 		},
-		setLevelData: function (index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId) {
+		setLevelData: function (index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId,scrollInstance) {
 			if (iosSelectUtil.isArray(this.data[index - 1])) {
 				var levelData = this.getLevelData(index, oneLevelId, twoLevelId, threeLevelId, fourLevelId);
 				this.renderLevel(index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId, levelData);
@@ -1560,14 +1571,14 @@
 				this.loadingShow();
 				this.data[index - 1].apply(this, [oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId].slice(0, index - 1).concat(function (levelData) {
 					this.loadingHide();
-					this.renderLevel(index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId, levelData);
+					this.renderLevel(index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId, levelData,scrollInstance);
 				}.bind(this)));
 			}
 			else {
 				throw new Error('data format error');
 			}
 		},
-	    renderLevel: function (index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId, levelData) {
+	    renderLevel: function (index, oneLevelId, twoLevelId, threeLevelId, fourLevelId, fiveLevelId, sixLevelId, levelData,scrollInstance) {
 	    	var plast = 0;
 	    	var curLevelId = arguments[index];
 			var hasAtId = levelData.some(function (v, i, o) {
@@ -1591,6 +1602,16 @@
 			tmpHtml += this.getWhiteItem();
 			var renderMap = this.mapRenderByIndex(index);
 			renderMap.levelUlContainDom.innerHTML = tmpHtml;
+			renderMap.levelUlContainDom.querySelectorAll("li").forEach(function(item,index){
+				// console.log(111);
+				item.addEventListener("click",function(e){
+                if(e.srcElement.innerText !== ""){
+									renderMap.scrollInstance.scrollTo(0,(index-3)*35*(-1),600)
+								}
+									console.log(e);
+				})
+			})
+			// renderMap.levelUlContainDom.querySelector("li")
 			renderMap.scrollInstance.refresh();
 			renderMap.scrollInstance.scrollToElement(':nth-child(' + plast + ')', 0);
 			var pdom = this.changeClassName(renderMap.levelContainDom, plast);
@@ -1635,7 +1656,7 @@
 	    		whiteItemHtml += itemLi;
 	    	}
 	    	return whiteItemHtml;
-	    }, 
+	    },
 	    changeClassName: function (levelContainDom, plast) {
 	    	var pdom;
 	    	if (this.options.itemShowCount === 3) {
