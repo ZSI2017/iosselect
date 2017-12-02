@@ -9,24 +9,26 @@
         (function() {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?b25bf95dd99f58452db28b1e99a1a46f";
-        var s = document.getElementsByTagName("script")[0]; 
+        var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
         })();
     </script>
 </head>
 <body>
 <a href="https://github.com/zhoushengmufc/iosselect">查看文档</a>
-<div class="form-item item-line" id="select_contact">                 
-    <label>省、市</label>                 
-    <div class="pc-box">                     
-        <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">                     
-        <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span> 
-    </div>             
+<div class="form-item item-line" id="select_contact">
+    <label>省、市</label>
+    <div class="pc-box">
+        <input type="hidden" name="contact_province_code" data-id="0001" id="contact_province_code" value="" data-province-name="">
+        <input type="hidden" name="contact_city_code" id="contact_city_code" value="" data-city-name=""><span data-city-code="510100" data-province-code="510000" data-district-code="510105" id="show_contact">四川省 成都市 青羊区</span>
+    </div>
 </div>
 </body>
 <script src="zepto.js"></script>
 <script src="areaData_v2.js"></script>
-<script src="../../src/iosSelect.js"></script>
+<!-- <script src="../../src/iosSelect.js"></script> -->
+<script src="../../src/iosselect06-050.js"></script>
+<!-- <script src="../../src/iosSelect.min.js"></script> -->
 <script type="text/javascript">
     var selectContactDom = $('#select_contact');
     var showContactDom = $('#show_contact');
@@ -39,7 +41,7 @@
         var oneLevelId = showContactDom.attr('data-province-code');
         var twoLevelId = showContactDom.attr('data-city-code');
         var threeLevelId = showContactDom.attr('data-district-code');
-        var iosSelect = new IosSelect(3, 
+        var iosSelect = new IosSelect(3,
             [iosProvinces, iosCitys, iosCountys],
             {
                 title: '地址选择',
@@ -49,7 +51,7 @@
                 twoLevelId: twoLevelId,
                 threeLevelId: threeLevelId,
                 callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-                    contactProvinceCodeDom.val(selectOneObj.id); 
+                    contactProvinceCodeDom.val(selectOneObj.id);
                     contactProvinceCodeDom.attr('data-province-name', selectOneObj.value);
                     contactCityCodeDom.val(selectTwoObj.id);
                     contactCityCodeDom.attr('data-city-name', selectTwoObj.value);
